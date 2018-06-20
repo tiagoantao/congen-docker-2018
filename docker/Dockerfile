@@ -6,10 +6,10 @@ RUN apt-get update; apt-get install -y emacs vim nano openssh-server lxde vnc4se
 
 RUN conda update --all; conda config --add channels r; conda config --add channels bioconda;conda install -y bwa samtools picard vcftools bedtools angsd bioconductor-edger gatk bayescan hisat2 plink2 stacks r r-vegan r-devtools bioconductor-qvalue;
 
-RUN mkdir /var/run/sshd; ssh-keygen -A; sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config; echo "root:congen17" | chpasswd; echo PasswordAuthentication yes >> /etc/ssh/sshd_config;
+RUN mkdir /var/run/sshd; ssh-keygen -A; sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config; echo "root:congen" | chpasswd; echo PasswordAuthentication yes >> /etc/ssh/sshd_config;
 
 
-RUN mkdir /root/.vnc; echo congen17 > pass; echo congen17 >> pass; vncpasswd < pass; rm pass
+RUN mkdir /root/.vnc; echo congen > pass; echo congen >> pass; vncpasswd < pass; rm pass
 COPY xstartup /root/.vnc
 RUN chmod a+x /root/.vnc/xstartup
 
@@ -17,15 +17,12 @@ RUN chmod a+x /root/.vnc/xstartup
 #RUN echo "source('https://bioconductor.org/biocLite.R')\nbiocLite('LEA')\ninstall.packages('RepeatABEL', repos='http://cran.us.r-project.org')\ndevtools::install_github('ngthomas/microhaplot', build_vignettes = TRUE)" > R.inst
 #RUN R --no-save < R.inst
 
-
-
 RUN mkdir /data
 VOLUME /data
-
 
 COPY run.sh run.sh
 RUN chmod a+x run.sh
 
 
-EXPOSE 22 5901 6080
+EXPOSE 22 5901
 CMD ./run.sh
