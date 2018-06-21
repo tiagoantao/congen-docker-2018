@@ -26,3 +26,4 @@ RUN chmod a+x run.sh
 
 EXPOSE 22 5901
 CMD ./run.sh
+VOLUME /data
