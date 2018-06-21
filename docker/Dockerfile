@@ -2,7 +2,7 @@ FROM continuumio/anaconda3:5.2.0
 MAINTAINER tiagoantao@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update; apt-get install -y emacs vim nano openssh-server lxde vnc4server build-essential zlib1g-dev libgsl0-dev -y unzip tmux screen firefox-esr net-tools xfce4-terminal; apt-get remove -y lxterminal; apt-get clean
+RUN apt-get update; apt-get install -y emacs vim nano openssh-server lxde vnc4server build-essential zlib1g-dev libgsl0-dev -y unzip tmux screen firefox-esr net-tools xinit xfce4-terminal; apt-get remove -y lxterminal; apt-get clean
 
 RUN conda update --all; conda config --add channels r; conda config --add channels bioconda;conda install -y bwa samtools picard vcftools bedtools angsd bioconductor-edger gatk bayescan hisat2 plink2 stacks r r-vegan r-devtools bioconductor-qvalue stringtie;
 
@@ -20,10 +20,12 @@ RUN chmod a+x /root/.vnc/xstartup
 RUN mkdir /data
 VOLUME /data
 
+EXPOSE 22
+EXPOSE 5901
+
 COPY run.sh run.sh
 RUN chmod a+x run.sh
 
 
-EXPOSE 22 5901
 CMD ./run.sh
 VOLUME /data
