@@ -14,3 +14,5 @@ On Linux just do
 docker pull tiagoantao/congen-docker-2018
 docker run -P -v/PATH/TO/YOUR/DATA:/data tiagoantao/congen-docker-2018
 ```
+
+On Windows and Mac...
